@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>ArcGIS Solar Panel Efficiency Analyzer — Esri Redlands Campus</title>
+
+    <!-- ArcGIS Maps SDK for JavaScript 5.1 (ESM + web components), loaded from CDN. -->
+    <script type="module" src="https://js.arcgis.com/5.1/"></script>
+
+    <!-- Local, git-ignored API key. Copy config.example.js to config.js and fill in your key. -->
+    <script src="./config.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <arcgis-scene id="scene" ground="world-elevation">
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+        <arcgis-navigation-toggle slot="top-left"></arcgis-navigation-toggle>
+        <arcgis-compass slot="top-left"></arcgis-compass>
+      </arcgis-scene>
+
+      <div id="top-left-stack">
+        <div id="title-panel" class="panel">
+          <div class="brand-row">
+            <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="16" r="7" fill="url(#sunGradient)" />
+              <g stroke="url(#sunGradient)" stroke-width="2.2" stroke-linecap="round">
+                <line x1="16" y1="1.5" x2="16" y2="6" />
+                <line x1="16" y1="26" x2="16" y2="30.5" />
+                <line x1="1.5" y1="16" x2="6" y2="16" />
+                <line x1="26" y1="16" x2="30.5" y2="16" />
+                <line x1="5.6" y1="5.6" x2="8.8" y2="8.8" />
+                <line x1="23.2" y1="23.2" x2="26.4" y2="26.4" />
+                <line x1="5.6" y1="26.4" x2="8.8" y2="23.2" />
+                <line x1="23.2" y1="8.8" x2="26.4" y2="5.6" />
+              </g>
+              <defs>
+                <linearGradient id="sunGradient" x1="0" y1="0" x2="32" y2="32">
+                  <stop offset="0" stop-color="#ffcf6b" />
+                  <stop offset="1" stop-color="#2aa876" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <h1>Solar Panel Efficiency Analyzer</h1>
+          </div>
+          <p id="subtitle">
+            Esri Redlands Campus digital twin. Drone-derived Gaussian Splat and true ortho,
+            with a campus-wide 0.5m solar tessellation (vegetation-spikes filtered out), with
+            real-surface ray-cast shadows.
+          </p>
+          <div class="nav-row">
+            <a class="nav-link active" href="./index.html">3D Viewer</a>
+            <a class="nav-link" href="./heatmap.html">2D Heatmap</a>
+          </div>
+        </div>
+
+        <div id="layers-panel" class="panel">
+          <h2>Digital Twin Layers</h2>
+          <div id="layer-rows"></div>
+          <div class="hint">
+            Toggle the Gaussian Splat for photoreal visualization of the campus.
+          </div>
+        </div>
+      </div>
+
+      <div id="time-panel" class="panel">
+        <h2 id="time-panel-title">Select Date:</h2>
+        <select id="month-select">
+          <option value="0">January 15</option>
+          <option value="1">February 15</option>
+          <option value="2">March 15</option>
+          <option value="3">April 15</option>
+          <option value="4">May 15</option>
+          <option value="5">June 15</option>
+          <option value="6" selected>July 15</option>
+          <option value="7">August 15</option>
+          <option value="8">September 15</option>
+          <option value="9">October 15</option>
+          <option value="10">November 15</option>
+          <option value="11">December 15</option>
+        </select>
+        <div id="time-readout">
+          <span id="time-label">2:00 PM</span>
+          <span id="sun-state"></span>
+        </div>
+        <input type="range" id="time-slider" min="8" max="16" step="2" value="14" />
+        <div class="preset-row">
+          <button class="preset-btn" data-hour="8">8 AM</button>
+          <button class="preset-btn" data-hour="10">10 AM</button>
+          <button class="preset-btn" data-hour="12">Noon</button>
+          <button class="preset-btn active" data-hour="14">2 PM</button>
+          <button class="preset-btn" data-hour="16">4 PM</button>
+        </div>
+        <div id="sun-readout"></div>
+      </div>
+
+      <div id="legend-panel" class="panel">
+        <h2 style="margin-bottom: 6px">Solar Exposure Score</h2>
+        <div class="legend-row"><span class="swatch" style="background:#2aa876"></span> 75–100 High</div>
+        <div class="legend-row"><span class="swatch" style="background:#e0a800"></span> 40–74 Moderate</div>
+        <div class="legend-row"><span class="swatch" style="background:#d9534f"></span> 0–39 Low (shadowed)</div>
+      </div>
+
+      <div id="details-panel" class="panel">
+        <h2 id="details-title">Details</h2>
+        <div id="details-content"><div class="empty">Click a solar panel or a tree to inspect it.</div></div>
+      </div>
+
+      <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div>Loading campus digital twin&hellip;</div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

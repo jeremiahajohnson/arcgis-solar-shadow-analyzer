@@ -1,0 +1,8 @@
+config.js
+.DS_Store
+node_modules/
+*.log
+data/
+detection/
+elevation/
+publish/

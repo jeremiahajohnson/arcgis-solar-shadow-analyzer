@@ -1,0 +1,511 @@
+:root {
+  --panel-bg: linear-gradient(145deg, rgba(64, 32, 14, 0.88) 0%, rgba(28, 14, 8, 0.9) 100%);
+  --panel-bg-alt: rgba(255, 150, 70, 0.08);
+  --border: rgba(255, 150, 80, 0.16);
+  --border-strong: rgba(255, 160, 90, 0.26);
+  --text: #eef2f6;
+  --text-dim: #93a1ac;
+  --accent: #2aa876;
+  --accent-sun: #ffcf6b;
+  --score-high: #2aa876;
+  --score-mid: #e0a800;
+  --score-low: #e0564f;
+  --radius: 10px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: "Avenir Next", "Avenir", "Segoe UI", system-ui, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  color: var(--text);
+}
+
+::selection {
+  background: var(--accent);
+  color: #06140e;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-sun);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+#app {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+arcgis-scene {
+  height: 100%;
+  width: 100%;
+}
+
+.panel {
+  position: absolute;
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow:
+    0 1px 0 0 rgba(255, 190, 130, 0.07) inset,
+    0 10px 30px rgba(0, 0, 0, 0.45);
+  padding: 14px 16px;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: panel-in 0.5s var(--ease) forwards;
+}
+
+#title-panel {
+  animation-delay: 0s;
+}
+#layers-panel {
+  animation-delay: 0.06s;
+}
+#time-panel {
+  animation-delay: 0.06s;
+}
+#legend-panel {
+  animation-delay: 0.12s;
+}
+#details-panel {
+  animation-delay: 0.12s;
+}
+
+@keyframes panel-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#top-left-stack {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 340px;
+}
+
+#top-left-stack .panel {
+  position: static;
+}
+
+#title-panel {
+  top: 12px;
+  left: 12px;
+  max-width: 340px;
+  border-color: var(--border-strong);
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  filter: drop-shadow(0 0 6px rgba(255, 207, 107, 0.35));
+}
+
+#title-panel h1 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+#title-panel p {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 8px 0 0 0;
+  line-height: 1.5;
+}
+
+.nav-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.nav-link {
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--panel-bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.nav-link:hover {
+  border-color: var(--accent);
+  background: rgba(42, 168, 118, 0.12);
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, var(--accent-sun), var(--accent));
+  border-color: transparent;
+  color: #06140e;
+}
+
+#layers-panel {
+  width: 268px;
+}
+
+#layers-panel h2,
+#time-panel h2,
+#details-panel h2 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin: 0 0 10px 0;
+}
+
+.layer-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 13px;
+  transition: color 0.15s var(--ease);
+}
+
+.layer-row:hover {
+  color: #fff;
+}
+
+.layer-row input {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+#time-panel {
+  top: 12px;
+  right: 12px;
+  width: 340px;
+}
+
+#time-readout {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+#time-label {
+  font-family: "Avenir Next", "Avenir", monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+#time-slider {
+  width: 100%;
+  accent-color: var(--accent-sun);
+  cursor: pointer;
+}
+
+#month-select {
+  width: 100%;
+  background: var(--panel-bg-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-family: inherit;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.preset-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.preset-btn,
+.action-btn {
+  background: var(--panel-bg-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.15s var(--ease),
+    background 0.15s var(--ease),
+    transform 0.1s var(--ease);
+}
+
+.preset-btn:hover,
+.action-btn:hover {
+  border-color: var(--accent);
+  background: rgba(42, 168, 118, 0.12);
+}
+
+.preset-btn:active,
+.action-btn:active {
+  transform: scale(0.96);
+}
+
+.preset-btn.active,
+.action-btn.active {
+  background: linear-gradient(135deg, var(--accent-sun), var(--accent));
+  border-color: transparent;
+  color: #06140e;
+  font-weight: 700;
+}
+
+#sun-readout {
+  margin-top: 10px;
+  font-size: 11px;
+  font-family: "Avenir Next", "Avenir", monospace;
+  color: var(--text-dim);
+}
+
+#details-panel {
+  bottom: 12px;
+  right: 12px;
+  width: 360px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+#details-panel .empty {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.detail-row span:last-child {
+  font-weight: 600;
+  font-family: "Avenir Next", "Avenir", monospace;
+}
+
+.score-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "Avenir Next", "Avenir", monospace;
+  color: #06140e;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.score-high {
+  background: var(--score-high);
+}
+
+.score-mid {
+  background: var(--score-mid);
+}
+
+.score-low {
+  background: var(--score-low);
+}
+
+#legend-panel {
+  bottom: 12px;
+  left: 12px;
+  font-size: 11px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 3px 0;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+#loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(64, 32, 14, 0.97) 0%, rgba(28, 14, 8, 0.98) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  font-size: 13px;
+  font-family: "Avenir Next", "Avenir", monospace;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+  flex-direction: column;
+  gap: 14px;
+  transition: opacity 0.3s var(--ease);
+}
+
+#loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent-sun), var(--accent), transparent 80%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* 2D heatmap page (heatmap.html / js/heatmap.js)                          */
+/* ---------------------------------------------------------------------- */
+#metrics-panel {
+  top: 12px;
+  right: 12px;
+  width: 360px;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+#metrics-panel h2 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin: 0 0 10px 0;
+}
+
+#metrics-panel h3 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin: 16px 0 8px 0;
+}
+
+#metrics-panel h3:first-of-type {
+  margin-top: 4px;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.metric-row span:last-child {
+  font-weight: 600;
+  font-family: "Avenir Next", "Avenir", monospace;
+}
+
+.bucket-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 6px 0 4px 0;
+  background: var(--panel-bg-alt);
+}
+
+.bucket-seg {
+  height: 100%;
+}
+
+.bucket-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: "Avenir Next", "Avenir", monospace;
+}
+
+#month-chart {
+  width: 100%;
+  height: 80px;
+  display: block;
+}
+
+#selection-summary .empty {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+#clear-selection-btn {
+  margin-top: 8px;
+  width: 100%;
+}
+
+#heatmap-legend-panel {
+  bottom: 12px;
+  left: 12px;
+  font-size: 11px;
+  width: 220px;
+}
+
+.legend-gradient {
+  height: 10px;
+  border-radius: 5px;
+  margin: 8px 0 4px 0;
+  background: linear-gradient(90deg, #d9534f, #e0a800, #2aa876);
+}
+
+.legend-gradient-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: "Avenir Next", "Avenir", monospace;
+}
+
+.select-mode-active {
+  cursor: crosshair;
+}

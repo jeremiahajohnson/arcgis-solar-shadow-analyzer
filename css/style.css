@@ -103,7 +103,7 @@ arcgis-scene {
 #title-panel {
   top: 12px;
   left: 12px;
-  max-width: 340px;
+  width: 340px;
   border-color: var(--border-strong);
 }
 
@@ -225,7 +225,8 @@ arcgis-scene {
   cursor: pointer;
 }
 
-#month-select {
+#month-select,
+#building-select {
   width: 100%;
   background: var(--panel-bg-alt);
   border: 1px solid var(--border);
@@ -236,6 +237,16 @@ arcgis-scene {
   font-family: inherit;
   margin-bottom: 10px;
   cursor: pointer;
+}
+
+.field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin: 0 0 6px 0;
 }
 
 .preset-row {
@@ -402,7 +413,7 @@ arcgis-scene {
 }
 
 /* ---------------------------------------------------------------------- */
-/* 2D heatmap page (heatmap.html / js/heatmap.js)                          */
+/* 2D heatmap page (2DViewer.html / js/heatmap.js)                          */
 /* ---------------------------------------------------------------------- */
 #metrics-panel {
   top: 12px;
@@ -468,10 +479,12 @@ arcgis-scene {
   font-family: "Avenir Next", "Avenir", monospace;
 }
 
-#month-chart {
+#month-chart,
+#day-chart {
   width: 100%;
   height: 80px;
   display: block;
+  cursor: pointer;
 }
 
 #selection-summary .empty {
@@ -508,4 +521,13 @@ arcgis-scene {
 
 .select-mode-active {
   cursor: crosshair;
+}
+
+#select-box {
+  position: absolute;
+  border: 1px dashed var(--accent);
+  background: rgba(42, 168, 118, 0.15);
+  pointer-events: none;
+  z-index: 30;
+  display: none;
 }

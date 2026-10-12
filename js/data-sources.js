@@ -31,10 +31,13 @@ export const FEATURE_SERVICES = {
   // output via publish/SolarPanelAnnualExposureScores.gdb.zip) carrying the campus-wide,
   // vegetation-spike-filtered solar tessellation plus 60 precomputed exposure-score fields
   // (12 representative days x 5 times of day -- see SNAPSHOT_HOURS/scoreFieldName below).
-  // This is the live source of truth for both panel geometry and scores in the 3D viewer,
+  // This is the live source of truth for panel geometry and scores for BOTH the 3D viewer
+  // (js/app.js) and the 2D heatmap page (js/heatmap.js, via js/agol.js's queryAllFeatures),
   // replacing the local data/solar_tessellation_3d.geojson + shadow_obstruction_annual.bin
-  // pipeline (still used as-is by the 2D annual heatmap page, which needs finer-grained
-  // per-hour data than these 5 daily snapshots provide).
+  // pipeline either page originally used. Also carries a "Building" text field (sparse
+  // while the user is still populating it) that drives the heatmap page's building
+  // selector -- there is no separate "solarPanelsAnalysis" service; an earlier non-"_v2"
+  // item was tried for this and abandoned (API key lacked access to it).
   solarPanelsAnnual:
     "https://services1.arcgis.com/uujCiiEZAflDbdxE/arcgis/rest/services/SolarPanelAnnualExposureScores_v2/FeatureServer/0",
 };

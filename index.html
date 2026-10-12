@@ -8,7 +8,11 @@
     <!-- ArcGIS Maps SDK for JavaScript 5.1 (ESM + web components), loaded from CDN. -->
     <script type="module" src="https://js.arcgis.com/5.1/"></script>
 
-    <!-- Local, git-ignored API key. Copy config.example.js to config.js and fill in your key. -->
+    <!-- Public, referrer-restricted deploy key (committed, used by GitHub Pages). -->
+    <script src="./config.production.js"></script>
+    <!-- Local, git-ignored dev key. Copy config.example.js to config.js and fill in your key.
+         Optional: 404s harmlessly on GitHub Pages where this file doesn't exist, and
+         overrides config.production.js when present for local development. -->
     <script src="./config.js"></script>
 
     <link rel="stylesheet" href="./css/style.css" />

@@ -72,7 +72,9 @@ time-enabled *data*, not driving solar position.
 ## Running it
 
 1. Copy `config.example.js` to `config.js` and set your ArcGIS API key
-   (never commit `config.js` — it's git-ignored).
+   (never commit `config.js` — it's git-ignored). `config.js` loads after
+   `config.production.js` and overrides it locally, so your dev key takes
+   precedence without touching the committed deploy key.
 2. Serve the folder with any static file server, e.g.:
    ```bash
    python3 -m http.server 8080
@@ -91,6 +93,7 @@ js/app.js              App bootstrap, layers, selection, UI wiring
 js/solar.js            Sun-position + shadow/exposure math (no dependencies)
 js/data-sources.js      Real hosted item IDs / service URLs
 config.example.js      Template for your local, git-ignored API key
+config.production.js   Committed, referrer-restricted public deploy key (GitHub Pages)
 ```
 
 ## Stretch goals (not in this MVP)

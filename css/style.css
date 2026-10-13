@@ -134,6 +134,16 @@ arcgis-scene {
   line-height: 1.5;
 }
 
+.contact-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-link:hover,
+.contact-link:focus {
+  text-decoration: underline;
+}
+
 .nav-row {
   display: flex;
   gap: 8px;
